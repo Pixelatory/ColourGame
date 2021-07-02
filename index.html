@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title></title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="icon" href="images/favicon.png" />
+  </head>
+
+  <body>
+    <section id='game'>
+      <div id='score'>Score: 0</div>
+      <div id='text'>Colour</div>
+      <div id='selectionArea'>
+        <button id='selectionOne' class="selection" onclick="selection(this)">One</button>
+        <button id='selectionTwo' class="selection" onclick="selection(this)">Two</button>
+        <button id='selectionThree' class="selection" onclick="selection(this)">Three</button>
+        <button id='selectionFour' class="selection" onclick="selection(this)">Four</button>
+      </div>
+    </section>
+    <script>
+      let colourOptions = {
+        "Orange": {
+          val: "#FFA500",
+          typeBackgroundColour: false,
+        },
+
+        "Red": {
+          val: "#FF0000",
+          typeBackgroundColour: false,
+        },
+
+        "Black": {
+          val: "#000000",
+          typeBackgroundColour: true,
+        },
+
+        "White": {
+          val: "#FFFFFF",
+          typeBackgroundColour: true,
+        },
+
+        "Purple": {
+          val: "#800080",
+          typeBackgroundColour: false,
+        },
+
+        "Green": {
+          val: "#00FF00",
+          typeBackgroundColour: false,
+        },
+
+        "Blue": {
+          val: "#0000FF",
+          typeBackgroundColour: false,
+        },
+
+        "Yellow": {
+          val: "#FFFF00",
+          typeBackgroundColour: false,
+        },
+
+        "Brown": {
+          val: "#8b4513",
+          typeBackgroundColour: false,
+        },
+      };
+
+      let answer;
+      let score = 0;
+
+      function nextCard() {
+        keys = Object.keys(colourOptions); // Get all keys as array
+        let backgroundColourName;
+        let textColourName;
+        let textColour;
+        let textContent;
+
+        /*
+          Select a background colour and text colour.
+          Must be so that both background and text colour are not the same colour.
+        */
+        while(true) {
+          let backgroundColourKey = keys[Math.floor(Math.random() * keys.length)];
+          let textColourKey = keys[Math.floor(Math.random() * keys.length)];
+          let textKey = keys[Math.floor(Math.random() * keys.length)];
+
+          if(backgroundColourKey != textColourKey) {
+            backgroundColour = colourOptions[backgroundColourKey].val;
+            textColour = colourOptions[textColourKey].val;
+            textColourName = textColourKey;
+            textContent = textKey;
+            backgroundColourName = backgroundColourKey;
+
+            if(colourOptions[textColourKey].typeBackgroundColour) {
+              answer = backgroundColourName;
+            } else {
+              answer = textColourName;
+            }
+            break;
+          }
+        }
+
+        // Update the visible screen here.
+        document.getElementById("game").style.backgroundColor = backgroundColour;
+        document.getElementById("text").style.color = textColour;
+        document.getElementById("text").innerHTML = textContent;
+
+        // Now update the possible selections
+        let selections = [null,null,null,null];
+
+        // Select two random unique selection colours
+        let randomColour;
+        while(true) {
+          randomColour = keys[Math.floor(Math.random() * keys.length)];
+          if(randomColour != backgroundColourName &&
+             randomColour != textColourName &&
+             randomColour != textContent) {
+             break;
+          }
+        }
+
+        // Start with background colour name, then text colour, then two other random colour names
+        selections[Math.floor(Math.random() * selections.length)] = backgroundColourName;
+        while(true) {
+          randomIdx = Math.floor(Math.random() * selections.length);
+          if (selections[randomIdx] == null) {
+            selections[randomIdx] = textColourName;
+            break;
+          }
+        }
+
+        while(true) {
+          randomIdx = Math.floor(Math.random() * selections.length);
+          if (selections[randomIdx] == null) {
+            selections[randomIdx] = textContent;
+            break;
+          }
+        }
+
+        for (let i = 0; i < selections.length; i++) {
+          if(selections[i] == null) {
+            selections[i] = randomColour;
+          }
+        }
+
+        // Now done with the selections, so apply them to the buttons.
+        document.getElementById('selectionOne').innerText = selections[0];
+        document.getElementById('selectionTwo').innerText = selections[1];
+        document.getElementById('selectionThree').innerText = selections[2];
+        document.getElementById('selectionFour').innerText = selections[3];
+      }
+
+      function selection(x) {
+        if (x.innerHTML == answer) {
+          score += 1;
+          document.getElementById('score').innerHTML = 'Score: ' + score.toString();
+        }
+        nextCard();
+      }
+
+      nextCard();
+    </script>
+  </body>
+</html>

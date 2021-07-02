@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#game {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#text {
+  font-size: 8vw;
+}
+
+#selectionArea {
+  position: absolute;
+  bottom: min(2vw, 100px);
+}
+
+#score {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+.selection {
+  background-color: white;
+  outline: none;
+  border: 2px solid #000000;
+  width: 11vw;
+  height: 5.5vw;
+  min-height: 75px;
+  min-width: 125px;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1250px) {
+  #text {
+    font-size: 10vw;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #text {
+    font-size: 12vw;
+  }
+}
+
+@media only screen and (max-width: 825px) {
+  #text {
+    font-size: 14vw;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  #text {
+    font-size: 16vw;
+  }
+}
+
+@media only screen and (max-width: 625px) {
+  #text {
+    font-size: 18vw;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #text {
+    font-size: 22vw;
+  }
+}
